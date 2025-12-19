@@ -14,6 +14,7 @@ const initDb = async () => {
         CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY,
         name VARCHAR(250) NOT NULL,
+        email VARCHAR(250) NOT NULL,
         password TEXT NOT NULL ,
         age INT,
         created_at TIMESTAMP DEFAULT NOW(),
@@ -24,14 +25,14 @@ const initDb = async () => {
 };
 initDb();
 
-app.post("/users", (req: Request, res: Response) => {
+app.post("/users", async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
-  const result = pool.query(
+  const result = await pool.query(
     `INSERT INTO users (name, email, password) VALUES ($1, $2,$3) RETURNING *`,
     [name, email, password]
   );
-  console.log("result");
+  console.log(result);
 });
 
 app.get("/", (req: Request, res: Response) => {
