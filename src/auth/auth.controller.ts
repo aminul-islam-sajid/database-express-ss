@@ -7,7 +7,7 @@ try {
    const result = await authService.loginUser(req.body.email, req.body.password)
  return res.status(201).json({
     message: "user created successfully",
-    data: result.rows[0]
+    data: result
   })
  } catch (error: any) {
  return res.status(500).json({
