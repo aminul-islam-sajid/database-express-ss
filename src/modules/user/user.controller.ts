@@ -29,10 +29,24 @@ const getAllUser =  async (req: Request, res: Response) => {
     message: error.message,
    
  })
+}};
+const getSingleUser =  async (req: Request, res: Response) => {
+ try {
+  const email = req.user!.email
+   const result = await userService.getSingleUserServiceDb(email)
+ return res.status(201).json({
+    message: "single user successfully",
+    data: result.rows,
+  })
+ } catch (error: any) {
+ return res.status(500).json({
+    message: error.message,
+   
+ })
 }}
 
 
 export const userController = {
 createUser,
-getAllUser
+getAllUser, getSingleUser
 }
